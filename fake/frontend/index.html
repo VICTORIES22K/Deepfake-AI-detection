@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idhu Unmaiya — Next-Gen Forensic AI Command Center</title>
+  
+  <!-- Premium Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              950: '#070A12',
+              900: '#0B101E',
+              850: '#10172B',
+              800: '#17223D',
+              700: '#23335A',
+              accent: '#00F0FF',
+            }
+          },
+          animation: {
+            'shimmer': 'shimmer 2.5s infinite linear',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'scan': 'scan 3s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(100%)' },
+            },
+            scan: {
+              '0%': { transform: 'translateY(0%)' },
+              '100%': { transform: 'translateY(100%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(11, 16, 30, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.45);
+    }
+
+    /* Ambient Tech Grid Background */
+    .tech-grid {
+      background-image: 
+        radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+        radial-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px, 64px 64px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    .tech-grid-light {
+      background-image: 
+        radial-gradient(rgba(14, 165, 233, 0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Cyber Glows */
+    .glow-cyan {
+      box-shadow: 0 0 35px -5px rgba(0, 240, 255, 0.25);
+    }
+    .glow-purple {
+      box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.25);
+    }
+    .glow-rose {
+      box-shadow: 0 0 35px -5px rgba(244, 63, 94, 0.3);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Active Routing Animation */
+    @keyframes engineBeacon {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.15);
+        border-color: #00F0FF;
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(0, 240, 255, 0.8), inset 0 0 25px rgba(0, 240, 255, 0.3);
+        border-color: #38bdf8;
+      }
+    }
+    .engine-active {
+      animation: engineBeacon 1.8s infinite ease-in-out;
+      transform: translateY(-2px);
+    }
+
+    /* Glassmorphic Cards */
+    .glass-panel {
+      background: rgba(11, 16, 30, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel-light {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    /* Corner HUD Accents */
+    .hud-box {
+      position: relative;
+    }
+    .hud-box::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 10px; height: 10px;
+      border-top: 2px solid #38bdf8;
+      border-left: 2px solid #38bdf8;
+      pointer-events: none;
+      border-top-left-radius: 12px;
+    }
+    .hud-box::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 10px; height: 10px;
+      border-bottom: 2px solid #38bdf8;
+      border-right: 2px solid #38bdf8;
+      pointer-events: none;
+      border-bottom-right-radius: 12px;
+    }
+
+    /* Dropzone Drag Active State */
+    .dropzone-active {
+      border-color: #00F0FF !important;
+      background: rgba(0, 240, 255, 0.08) !important;
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.25) !important;
+      transform: scale(1.008);
+    }
+  </style>
+</head>
+<body id="bodyRoot" class="bg-cyber-950 text-slate-100 font-sans min-h-screen flex tech-grid transition-colors duration-300 antialiased selection:bg-sky-500 selection:text-slate-950">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
+  <div class="fixed bottom-1/4 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="fixed top-1/2 right-1/3 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+  <!-- Sidebar (Left Fixed Sleek Dock) -->
+  <aside id="sidebar" class="w-16 bg-cyber-900/90 backdrop-blur-xl border-r border-cyber-700/50 flex flex-col items-center py-5 fixed h-full z-50 transition-all duration-300 shadow-2xl justify-between">
+    
+    <!-- Top Group: Logo & Audit History -->
+    <div class="flex flex-col items-center space-y-5">
+      <div onclick="triggerConanQuote()" class="relative group cursor-pointer" title="Detective Conan Insight Mode">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-cyan-400 p-0.5 shadow-lg shadow-sky-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+          <div class="w-full h-full bg-cyber-900 rounded-[10px] flex items-center justify-center overflow-hidden">
+            <img src="conan.png" alt="IU" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-display font-extrabold text-sky-400 text-xs tracking-wider\'>IU</span>';" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <span class="absolute left-14 top-2 bg-cyber-900 text-sky-300 border border-cyber-700 text-[11px] font-mono px-2.5 py-1 rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all whitespace-nowrap z-50">
+          Forensic Notes
+        </span>
+      </div>
+
+      <!-- Audit Drawer Toggle -->
+      <button onclick="toggleSidebar()" class="relative group w-10 h-10 rounded-xl bg-cyber-850 hover:bg-cyber-800 border border-cyber-700/60 hover:border-sky-500/40 text-slate-400 hover:text-sky-400 flex items-center justify-center transition-all duration-200 shadow-sm" title="Audit Logs Registry">
+        <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+        <span class="absolute left-14 top-2 bg-cyber-900 text-slate-200 border border-cyber-700 text-[11px] font-mono px-2.5 py-1 rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all whitespace-nowrap z-50">
+          Audit Vault
+        </span>
+      </button>
+    </div>
+
+    <!-- Bottom Group: Settings Popover -->
+    <div class="relative">
+      <button onclick="toggleSettingsMenu()" class="w-10 h-10 rounded-xl bg-cyber-850 hover:bg-cyber-800 border border-cyber-700/60 hover:border-sky-500/40 text-slate-400 hover:text-sky-400 flex items-center justify-center transition-all duration-200 shadow-sm" title="Console Preferences">
+        <i class="fa-solid fa-sliders text-sm"></i>
+      </button>
+
+      <!-- Settings Popover Menu -->
+      <div id="settingsMenu" class="hidden absolute left-14 bottom-0 w-64 glass-panel rounded-2xl p-4 shadow-2xl z-50 space-y-3.5 text-xs border border-cyber-700">
+        <div class="font-display font-bold text-slate-200 border-b border-cyber-700/60 pb-2.5 flex items-center justify-between">
+          <span class="flex items-center gap-2 text-sky-400">
+            <i class="fa-solid fa-sliders"></i> System Settings
+          </span>
+          <button onclick="toggleSettingsMenu()" class="text-slate-400 hover:text-white p-1">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Theme Setting -->
+        <div class="space-y-1.5">
+          <span class="text-slate-400 text-[11px] font-medium uppercase tracking-wider">Interface Theme</span>
+          <button onclick="toggleTheme()" class="w-full bg-cyber-850 hover:bg-cyber-800 text-slate-200 border border-cyber-700/70 py-2.5 px-3 rounded-xl transition flex items-center justify-between font-medium shadow-sm" id="themeBtn">
+            <span class="flex items-center gap-2">
+              <i id="themeIcon" class="fa-solid fa-sun text-amber-400"></i> Mode
+            </span>
+            <span id="themeText" class="font-mono text-white bg-cyber-950 px-2 py-0.5 rounded border border-cyber-700 text-[11px]">Light Mode</span>
+          </button>
+        </div>
+
+        <!-- Typography Display Setting -->
+        <div class="space-y-1.5">
+          <span class="text-slate-400 text-[11px] font-medium uppercase tracking-wider">Header Font Style</span>
+          <button onclick="toggleHeaderStyle()" class="w-full bg-cyber-850 hover:bg-cyber-800 text-sky-300 border border-cyber-700/70 py-2.5 px-3 rounded-xl transition flex items-center justify-between font-medium shadow-sm">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-font text-sky-400"></i> Typography
+            </span>
+            <span id="headerStyleText" class="font-mono text-white bg-cyber-950 px-2 py-0.5 rounded border border-cyber-700 text-[11px]">Cyber Display</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Slide-out Audit Drawer (Glassmorphic Vault) -->
+  <div id="auditDrawer" class="fixed top-0 left-16 h-full w-96 glass-panel border-r border-cyber-700 z-40 transform -translate-x-full opacity-0 pointer-events-none transition-all duration-300 ease-out p-6 flex flex-col space-y-4 shadow-2xl">
+    <div class="flex items-center justify-between pb-3.5 border-b border-cyber-700/60">
+      <div>
+        <h2 id="drawerTitle" class="font-display text-xl font-bold text-sky-400 flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-sky-400"></i> Cryptographic Audit Trail
+        </h2>
+        <p class="text-xs text-slate-400 mt-0.5">Sealed SHA-256 verification history</p>
+      </div>
+      <button onclick="toggleSidebar()" class="w-8 h-8 rounded-lg bg-cyber-850 hover:bg-cyber-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Search Input -->
+    <div class="relative">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-xs text-slate-500"></i>
+      <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="Search hash, filename, or verdict..." class="w-full bg-cyber-950 border border-cyber-700/80 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/50 transition">
+    </div>
+
+    <!-- Logs List -->
+    <div id="auditListContainer" class="flex-1 overflow-y-auto space-y-2.5 pr-1 text-xs"></div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <div class="flex-1 ml-16 flex flex-col min-h-screen">
+
+    <!-- Top Horizontal Bar -->
+    <header id="headerBar" class="border-b border-cyber-800/80 bg-cyber-900/80 backdrop-blur-xl px-6 md:px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 transition-all duration-300 shadow-sm">
+      
+      <!-- Brand & Title (WITHOUT the "Multimodal Engine" text as requested) -->
+      <div class="flex items-center space-x-3.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 via-cyan-400 to-indigo-500 p-0.5 shadow-md shadow-sky-500/20 flex items-center justify-center">
+          <div class="w-full h-full bg-cyber-950 rounded-[10px] flex items-center justify-center text-sky-400">
+            <i class="fa-solid fa-fingerprint text-base"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-display font-bold text-2xl tracking-tight bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent" id="brandTitle">
+            Idhu Unmaiya
+          </span>
+          <span class="text-[10px] font-mono text-slate-400 tracking-wider block -mt-1">
+            FORENSIC AI SUITE
+          </span>
+        </div>
+      </div>
+
+      <!-- Top Right Status & Actions -->
+      <div class="flex items-center space-x-2.5 md:space-x-3">
+        <!-- Detective Note Trigger -->
+        <button onclick="triggerConanQuote()" class="text-xs bg-cyber-850 hover:bg-cyber-800 text-sky-300 border border-cyber-700/80 px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 font-medium shadow-sm hover:border-sky-500/40">
+          <i class="fa-solid fa-magnifying-glass-chart text-sky-400"></i>
+          <span id="caseNoteText" class="hidden sm:inline font-mono">Detective Insight</span>
+        </button>
+
+        <!-- Audit Trail Button -->
+        <button onclick="toggleSidebar()" class="text-xs bg-cyber-850 hover:bg-cyber-800 text-slate-300 border border-cyber-700/80 px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 font-medium shadow-sm hover:border-sky-500/40">
+          <i class="fa-solid fa-database text-slate-400"></i>
+          <span class="hidden sm:inline font-mono">Audit Registry</span>
+        </button>
+
+        <!-- Theme Quick Toggle -->
+        <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl bg-cyber-850 hover:bg-cyber-800 border border-cyber-700/80 text-amber-400 flex items-center justify-center transition shadow-sm hover:border-amber-400/50" title="Toggle Dark/Light Mode">
+          <i id="themeHeaderIcon" class="fa-solid fa-sun text-xs"></i>
+        </button>
+
+        <!-- Live Network Status Pill -->
+        <div class="flex items-center space-x-2 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-full font-mono font-medium shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="hidden md:inline">Neural Guard Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Command Body -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-5 md:p-8 space-y-6">
+
+      <!-- Hero Header Section -->
+      <section class="text-center space-y-2.5 pt-1">
+        <h1 class="font-display text-3xl md:text-5xl font-extrabold tracking-tight text-white" id="mainHeading">
+          Multi-Modal <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent">Forensic AI</span> Command
+        </h1>
+        <p class="text-slate-400 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed" id="subHeading">
+          Intelligent automated intake and neural verification. Drag &amp; drop any media or document to route through specialized deepfake detection pipelines.
+        </p>
+
+        <!-- Detective Conan Quote Banner -->
+        <div id="quoteBanner" class="hidden max-w-xl mx-auto glass-panel rounded-2xl p-3 text-sky-300 border border-sky-500/30 text-xs text-center shadow-lg transition-all animate-pulse-slow">
+          <i class="fa-solid fa-quote-left mr-2 text-sky-400"></i>
+          <span id="quoteText" class="font-display font-medium text-sm tracking-wide">There is always only one truth!</span>
+          <i class="fa-solid fa-quote-right ml-2 text-sky-400"></i>
+        </div>
+      </section>
+
+      <!-- Active Model Engine Matrix (Interactive Grid) -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
+        
+        <!-- Engine 1: Video Fusion Engine -->
+        <div id="badge-fusion" class="glass-panel rounded-2xl p-4 space-y-2 border border-cyber-700/60 transition-all duration-300 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-sky-400 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                <i class="fa-solid fa-film text-[11px]"></i>
+              </span>
+              Fusion Engine
+            </span>
+            <span class="text-[9px] font-mono bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2 py-0.5 rounded-full">
+              Video+Audio
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-snug">
+            Facial frame anomaly detector &amp; voice harmonic dual cross-fusion.
+          </p>
+          <div class="text-[10px] text-slate-500 font-mono pt-0.5 flex gap-1 flex-wrap">
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.mp4</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.mov</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.avi</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.mkv</span>
+          </div>
+        </div>
+
+        <!-- Engine 2: Audio Model -->
+        <div id="badge-audio" class="glass-panel rounded-2xl p-4 space-y-2 border border-cyber-700/60 transition-all duration-300 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-violet-400 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
+                <i class="fa-solid fa-waveform text-[11px]"></i>
+              </span>
+              Audio Model
+            </span>
+            <span class="text-[9px] font-mono bg-violet-500/10 text-violet-300 border border-violet-500/20 px-2 py-0.5 rounded-full">
+              Wav2Vec2
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-snug">
+            Synthetic voice clone &amp; neural vocoder frequency anomaly detector.
+          </p>
+          <div class="text-[10px] text-slate-500 font-mono pt-0.5 flex gap-1 flex-wrap">
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.wav</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.mp3</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.ogg</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.flac</span>
+          </div>
+        </div>
+
+        <!-- Engine 3: Vision Model -->
+        <div id="badge-vision" class="glass-panel rounded-2xl p-4 space-y-2 border border-cyber-700/60 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-emerald-400 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <i class="fa-solid fa-image text-[11px]"></i>
+              </span>
+              Vision Model
+            </span>
+            <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+              ViT + ELA
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-snug">
+            Diffusion artifacts &amp; Thermal Jet compression error heatmap.
+          </p>
+          <div class="text-[10px] text-slate-500 font-mono pt-0.5 flex gap-1 flex-wrap">
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.jpg</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.png</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.webp</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.bmp</span>
+          </div>
+        </div>
+
+        <!-- Engine 4: Document Integrity -->
+        <div id="badge-document" class="glass-panel rounded-2xl p-4 space-y-2 border border-cyber-700/60 transition-all duration-300 hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-amber-400 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                <i class="fa-solid fa-file-shield text-[11px]"></i>
+              </span>
+              Document Model
+            </span>
+            <span class="text-[9px] font-mono bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded-full">
+              Forensic
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-snug">
+            Cryptographic hashing, structural entropy &amp; metadata verification.
+          </p>
+          <div class="text-[10px] text-slate-500 font-mono pt-0.5 flex gap-1 flex-wrap">
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.pdf</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.docx</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.txt</span>
+            <span class="bg-cyber-850 px-1.5 py-0.5 rounded">.csv</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- File Upload Intake Terminal with Drag & Drop -->
+      <section id="uploadSection" class="glass-panel rounded-3xl p-6 md:p-8 space-y-5 shadow-2xl border border-cyber-700/80 transition-all duration-300">
+        
+        <div class="text-xs font-bold text-slate-300 flex items-center justify-between border-b border-cyber-700/60 pb-3.5" id="uploadHeader">
+          <span class="flex items-center gap-2 text-sky-400 font-display text-lg font-bold" id="uploadTitleText">
+            <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i> Evidence Intake Terminal
+          </span>
+          <span class="text-[11px] text-sky-300 font-mono bg-sky-950/80 px-3 py-1 rounded-full border border-sky-800 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span> Auto-Routing Active
+          </span>
+        </div>
+
+        <!-- Dropzone Container (Futuristic HUD Terminal) -->
+        <div id="dropzone" 
+             ondragover="handleDragOver(event)" 
+             ondragleave="handleDragLeave(event)" 
+             ondrop="handleDrop(event)"
+             class="hud-box border-2 border-dashed border-sky-500/30 hover:border-sky-400/80 transition-all duration-300 rounded-2xl p-8 md:p-10 text-center bg-sky-500/[0.02] hover:bg-sky-500/[0.05] space-y-4 cursor-pointer relative group"
+             onclick="triggerFileInput()">
+          
+          <div id="dropPrompt" class="space-y-4">
+            <!-- Center Scan Icon -->
+            <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+              <div class="absolute inset-0 bg-sky-500/10 rounded-2xl blur-md group-hover:blur-lg transition-all"></div>
+              <div class="w-16 h-16 bg-cyber-900 border border-sky-500/30 rounded-2xl flex items-center justify-center text-sky-400 shadow-xl group-hover:scale-110 group-hover:border-sky-400 transition-all duration-300">
+                <i class="fa-solid fa-radar text-2xl group-hover:rotate-45 transition-transform duration-500"></i>
+              </div>
+            </div>
+
+            <div>
+              <p class="font-display text-xl md:text-2xl font-bold text-slate-100 group-hover:text-sky-300 transition-colors" id="dropText">
+                Drag &amp; Drop Suspect Evidence Here
+              </p>
+              <p class="text-xs text-slate-400 mt-1.5 max-w-md mx-auto leading-relaxed">
+                Supports video clips, audio tracks, digital photos, and forensic documents. Automated neural routing triggered upon intake.
+              </p>
+            </div>
+            
+            <div class="pt-2">
+              <span class="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-400 hover:to-cyan-300 text-slate-950 font-display font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-sky-500/20 transition-all duration-200 group-hover:shadow-sky-500/30">
+                <i class="fa-solid fa-folder-open"></i> Browse Files from Device
+              </span>
+              <input type="file" id="mediaInput" multiple accept="*/*" onchange="handleFileSelect(event)" class="hidden" onclick="event.stopPropagation()"/>
+            </div>
+          </div>
+
+          <!-- Live Auto-Routing Banner -->
+          <div id="routingNotice" class="hidden p-3.5 bg-sky-950/80 border border-sky-500/40 rounded-xl text-xs text-sky-300 flex items-center justify-center gap-2 font-mono shadow-lg">
+            <i class="fa-solid fa-bolt-lightning text-amber-400 animate-bounce"></i>
+            <span id="routingNoticeText">Detecting file signature &amp; routing...</span>
+          </div>
+
+          <!-- Batch Queue Preview -->
+          <div id="batchPreviewContainer" class="hidden space-y-3 pt-2" onclick="event.stopPropagation()">
+            <div class="text-xs text-sky-400 font-semibold flex items-center justify-between px-2 border-t border-cyber-700/60 pt-3">
+              <span id="batchCountBadge" class="font-mono flex items-center gap-1.5">
+                <i class="fa-solid fa-layer-group text-sky-400"></i> Queued Evidence Items
+              </span>
+              <button onclick="clearBatch()" class="text-rose-400 hover:text-rose-300 text-xs flex items-center gap-1 font-mono transition">
+                <i class="fa-solid fa-trash-can"></i> Clear All
+              </button>
+            </div>
+            
+            <div id="previewGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-60 overflow-y-auto p-2 bg-cyber-950/80 rounded-xl border border-cyber-700"></div>
+          </div>
+        </div>
+
+        <!-- Live Processing Progress Tracker -->
+        <div id="progressTracker" class="hidden space-y-3 bg-cyber-950/90 border border-cyber-700 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-display font-bold text-sky-400 flex items-center gap-2">
+              <i class="fa-solid fa-microchip animate-spin text-sky-400"></i>
+              <span id="progressStepTitle">Forensic Analysis In Progress</span>
+            </span>
+            <span id="progressPctText" class="font-mono font-bold text-sky-400">0%</span>
+          </div>
+          <div class="w-full bg-cyber-900 h-2.5 rounded-full overflow-hidden border border-cyber-700/80 relative">
+            <div id="progressBar" class="bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-400 h-full w-0 transition-all duration-300 rounded-full relative">
+              <div class="absolute inset-0 bg-white/20 animate-shimmer"></div>
+            </div>
+          </div>
+          <p id="progressDetailText" class="text-[11px] font-mono text-slate-400 truncate">Initializing deep learning neural pipelines...</p>
+        </div>
+      </section>
+
+      <!-- Results Dossier Section -->
+      <section id="resultsPanel" class="hidden space-y-6">
+        <div class="flex items-center justify-between border-b border-cyber-700/60 pb-3" id="resultsHeader">
+          <h2 class="font-display text-2xl md:text-3xl font-bold text-white flex items-center gap-2.5" id="resultsTitle">
+            <span class="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 text-sm">
+              <i class="fa-solid fa-certificate"></i>
+            </span>
+            Forensic Inspection Dossier
+          </h2>
+          <span id="resultCountBadge" class="text-xs bg-cyber-850 text-slate-300 px-3.5 py-1.5 rounded-full border border-cyber-700 font-mono"></span>
+        </div>
+        <div id="batchResultsList" class="space-y-6"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Image/Thumbnail High-Res Inspection Modal -->
+  <div id="imageModal" class="hidden fixed inset-0 bg-cyber-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-200" onclick="closeImageModal()">
+    <div class="glass-panel border border-cyber-700 rounded-2xl max-w-3xl w-full p-5 space-y-3.5 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-cyber-700 pb-2.5">
+        <span id="modalTitle" class="text-xs font-bold text-sky-400 font-mono truncate flex items-center gap-2">
+          <i class="fa-solid fa-crosshairs text-sky-400"></i> Forensic Frame Telemetry
+        </span>
+        <button onclick="closeImageModal()" class="w-7 h-7 rounded-lg bg-cyber-850 hover:bg-cyber-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+      <div class="flex justify-center bg-cyber-950 rounded-xl p-2 max-h-[70vh] overflow-hidden border border-cyber-700/60">
+        <img id="modalImg" src="" class="max-h-[65vh] object-contain rounded" alt="Evidence Preview">
+      </div>
+      <div id="modalCaption" class="text-xs text-slate-300 font-mono bg-cyber-950 p-2.5 rounded-lg border border-cyber-700/50"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic & Backend API Integration -->
+  <script>
+    const API_BASE = "http://127.0.0.1:8000";
+    let cachedLogs = [];
+    let drawerOpen = false;
+    let selectedFiles = [];
+    let processedResults = {};
+    let isDarkMode = true;
+
+    const conanQuotes = [
+      "There is always only one truth!",
+      "Zero is where everything starts. Nothing would take place if it were not for zero!",
+      "Eliminate the impossible, whatever remains, however improbable, must be the truth!",
+      "A detective who uses his deductive powers to corner a suspect... is no better than a murderer.",
+      "Words are like swords. If you use them the wrong way, they can turn into ugly weapons."
+    ];
+
+    function toggleSettingsMenu() {
+      const menu = document.getElementById('settingsMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    function triggerConanQuote() {
+      const banner = document.getElementById('quoteBanner');
+      const text = document.getElementById('quoteText');
+      const randomIdx = Math.floor(Math.random() * conanQuotes.length);
+      text.innerText = conanQuotes[randomIdx];
+      banner.classList.remove('hidden');
+    }
+
+    let isCyberDisplay = true;
+    function toggleHeaderStyle() {
+      isCyberDisplay = !isCyberDisplay;
+      const text = document.getElementById('headerStyleText');
+      const brand = document.getElementById('brandTitle');
+      const heading = document.getElementById('mainHeading');
+
+      if (isCyberDisplay) {
+        text.innerText = "Cyber Display";
+        brand.className = "font-display font-bold text-2xl tracking-tight bg-gradient-to-r from-sky-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent";
+        heading.className = "font-display text-3xl md:text-5xl font-extrabold tracking-tight " + (isDarkMode ? "text-white" : "text-slate-900");
+      } else {
+        text.innerText = "Minimal Sans";
+        brand.className = "font-sans font-extrabold text-xl tracking-wider uppercase " + (isDarkMode ? "text-sky-400" : "text-sky-600");
+        heading.className = "font-sans text-3xl md:text-4xl font-black tracking-tight uppercase " + (isDarkMode ? "text-white" : "text-slate-900");
+      }
+    }
+
+    function toggleTheme() {
+      isDarkMode = !isDarkMode;
+      const body = document.getElementById('bodyRoot');
+      const header = document.getElementById('headerBar');
+      const sidebar = document.getElementById('sidebar');
+      const uploadSec = document.getElementById('uploadSection');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeHeaderIcon = document.getElementById('themeHeaderIcon');
+      const themeText = document.getElementById('themeText');
+      const subHeading = document.getElementById('subHeading');
+      const uploadHeader = document.getElementById('uploadHeader');
+      const resultsHeader = document.getElementById('resultsHeader');
+
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        body.className = "bg-cyber-950 text-slate-100 font-sans min-h-screen flex tech-grid transition-colors duration-300 antialiased";
+        header.className = "border-b border-cyber-800/80 bg-cyber-900/80 backdrop-blur-xl px-6 md:px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 transition-all duration-300 shadow-sm";
+        sidebar.className = "w-16 bg-cyber-900/90 backdrop-blur-xl border-r border-cyber-700/50 flex flex-col items-center py-5 fixed h-full z-50 transition-all duration-300 shadow-2xl justify-between";
+        uploadSec.className = "glass-panel rounded-3xl p-6 md:p-8 space-y-5 shadow-2xl border border-cyber-700/80 transition-all duration-300";
+        subHeading.className = "text-slate-400 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed";
+        uploadHeader.className = "text-xs font-bold text-slate-300 flex items-center justify-between border-b border-cyber-700/60 pb-3.5";
+        if (resultsHeader) resultsHeader.className = "flex items-center justify-between border-b border-cyber-700/60 pb-3";
+        themeIcon.className = "fa-solid fa-sun text-amber-400";
+        if (themeHeaderIcon) themeHeaderIcon.className = "fa-solid fa-sun text-xs text-amber-400";
+        themeText.innerText = "Light Mode";
+      } else {
+        document.documentElement.classList.remove('dark');
+        body.className = "bg-slate-50 text-slate-900 font-sans min-h-screen flex tech-grid-light transition-colors duration-300 antialiased";
+        header.className = "border-b border-slate-200 bg-white/90 backdrop-blur-xl px-6 md:px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 transition-all duration-300 shadow-sm";
+        sidebar.className = "w-16 bg-white/95 backdrop-blur-xl border-r border-slate-200 flex flex-col items-center py-5 fixed h-full z-50 transition-all duration-300 shadow-md justify-between";
+        uploadSec.className = "glass-panel-light rounded-3xl p-6 md:p-8 space-y-5 shadow-xl border border-slate-200 transition-all duration-300";
+        subHeading.className = "text-slate-600 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed";
+        uploadHeader.className = "text-xs font-bold text-slate-700 flex items-center justify-between border-b border-slate-200 pb-3.5";
+        if (resultsHeader) resultsHeader.className = "flex items-center justify-between border-b border-slate-200 pb-3";
+        themeIcon.className = "fa-solid fa-moon text-sky-600";
+        if (themeHeaderIcon) themeHeaderIcon.className = "fa-solid fa-moon text-xs text-sky-600";
+        themeText.innerText = "Dark Mode";
+      }
+    }
+
+    function toggleSidebar() {
+      drawerOpen = !drawerOpen;
+      const drawer = document.getElementById('auditDrawer');
+      if (drawerOpen) {
+        drawer.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
+        drawer.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+      } else {
+        drawer.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+        drawer.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function triggerFileInput() {
+      document.getElementById('mediaInput').click();
+    }
+
+    function clearBatch() {
+      selectedFiles = [];
+      processedResults = {};
+      document.getElementById('mediaInput').value = '';
+      document.getElementById('previewGrid').innerHTML = '';
+      document.getElementById('batchPreviewContainer').classList.add('hidden');
+      document.getElementById('routingNotice').classList.add('hidden');
+      clearEngineHighlights();
+    }
+
+    function removeSingleFile(index) {
+      selectedFiles.splice(index, 1);
+      renderPreviewGrid();
+      if (selectedFiles.length > 0) {
+        highlightEngineForFile(selectedFiles[0]);
+      } else {
+        clearEngineHighlights();
+      }
+    }
+
+    function detectClientModality(filename, filetype) {
+      const fn = (filename || '').toLowerCase();
+      const ft = (filetype || '').toLowerCase();
+      if (fn.match(/\.(mp4|avi|mov|mkv|webm|flv|wmv|m4v)$/) || ft.startsWith('video/')) {
+        return {
+          type: 'fusion_engine',
+          name: 'Dual Video Fusion Engine (Facial Frames + Audio Tracks)',
+          icon: 'fa-film',
+          badgeId: 'badge-fusion'
+        };
+      }
+      if (fn.match(/\.(wav|mp3|ogg|m4a|aac|flac|opus)$/) || ft.startsWith('audio/')) {
+        return {
+          type: 'audio_model',
+          name: 'Acoustic Voice Model (Wav2Vec2 Voice Classifier)',
+          icon: 'fa-waveform',
+          badgeId: 'badge-audio'
+        };
+      }
+      if (fn.match(/\.(jpg|jpeg|png|webp|bmp|tiff|gif|svg)$/) || ft.startsWith('image/')) {
+        return {
+          type: 'vision_model',
+          name: 'Spatial Vision Classifier (ViT + Thermal ELA Heatmap)',
+          icon: 'fa-image',
+          badgeId: 'badge-vision'
+        };
+      }
+      return {
+        type: 'document_model',
+        name: 'Document & Cryptographic Integrity Engine',
+        icon: 'fa-file-shield',
+        badgeId: 'badge-document'
+      };
+    }
+
+    function highlightEngineForFile(file) {
+      clearEngineHighlights();
+      const info = detectClientModality(file.name, file.type);
+      const target = document.getElementById(info.badgeId);
+      if (target) {
+        target.classList.add('engine-active');
+      }
+
+      const routingNotice = document.getElementById('routingNotice');
+      const routingNoticeText = document.getElementById('routingNoticeText');
+      routingNoticeText.innerHTML = `Auto-Routing <strong>${file.name}</strong> &rarr; <span class="text-sky-300 font-bold">${info.name}</span>`;
+      routingNotice.classList.remove('hidden');
+    }
+
+    function clearEngineHighlights() {
+      ['badge-fusion', 'badge-audio', 'badge-vision', 'badge-document'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('engine-active');
+      });
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('dropzone').classList.add('dropzone-active');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('dropzone').classList.remove('dropzone-active');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault(); 
+      e.stopPropagation();
+      document.getElementById('dropzone').classList.remove('dropzone-active');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        appendAndAutoProcessFiles(e.dataTransfer.files);
+      }
+    }
+
+    function handleFileSelect(event) {
+      if (event && event.target && event.target.files.length > 0) {
+        appendAndAutoProcessFiles(event.target.files);
+      }
+    }
+
+    async function appendAndAutoProcessFiles(newFiles) {
+      if (!newFiles || newFiles.length === 0) return;
+      const incoming = Array.from(newFiles);
+      incoming.forEach(file => {
+        if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+          selectedFiles.push(file);
+        }
+      });
+      renderPreviewGrid();
+      highlightEngineForFile(incoming[0]);
+
+      // Automatically execute pipeline analysis
+      await runBatchAnalysis();
+    }
+
+    function renderPreviewGrid() {
+      const grid = document.getElementById('previewGrid');
+      grid.innerHTML = '';
+      if (selectedFiles.length === 0) {
+        document.getElementById('batchPreviewContainer').classList.add('hidden');
+        return;
+      }
+      selectedFiles.forEach((file, index) => {
+        const objectUrl = URL.createObjectURL(file);
+        const card = document.createElement('div');
+        card.className = "bg-cyber-900 border border-cyber-700 rounded-xl p-2.5 text-center space-y-1.5 relative group shadow-sm";
+        
+        let mediaHtml = `<div class="h-16 w-full flex items-center justify-center bg-cyber-950 rounded-lg text-sky-400"><i class="fa-solid fa-file-shield text-2xl"></i></div>`;
+        if (file.type && file.type.startsWith('image/')) {
+          mediaHtml = `<img src="${objectUrl}" class="h-16 w-full object-contain rounded-lg bg-cyber-950">`;
+        } else if (file.type && file.type.startsWith('video/')) {
+          mediaHtml = `<video src="${objectUrl}" class="h-16 w-full object-cover rounded-lg bg-cyber-950"></video>`;
+        } else if (file.type && file.type.startsWith('audio/')) {
+          mediaHtml = `<div class="h-16 w-full flex items-center justify-center bg-cyber-950 rounded-lg text-violet-400"><i class="fa-solid fa-waveform text-2xl"></i></div>`;
+        }
+
+        const modality = detectClientModality(file.name, file.type);
+
+        card.innerHTML = `
+          <button onclick="removeSingleFile(${index})" class="absolute top-1.5 right-1.5 bg-rose-500 hover:bg-rose-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow"><i class="fa-solid fa-xmark"></i></button>
+          ${mediaHtml}
+          <div class="text-[10px] font-mono text-slate-300 truncate px-1" title="${file.name}">${file.name}</div>
+          <div class="text-[9px] text-sky-400 font-mono flex items-center justify-center gap-1"><i class="fa-solid ${modality.icon}"></i> ${modality.type.split('_')[0].toUpperCase()}</div>
+        `;
+        grid.appendChild(card);
+      });
+      document.getElementById('batchPreviewContainer').classList.remove('hidden');
+      document.getElementById('batchCountBadge').innerHTML = `<i class="fa-solid fa-layer-group text-sky-400"></i> ${selectedFiles.length} Evidence File(s) in Intake`;
+    }
+
+    function updateProgress(pct, title, detail) {
+      const tracker = document.getElementById('progressTracker');
+      const bar = document.getElementById('progressBar');
+      const pctText = document.getElementById('progressPctText');
+      const titleText = document.getElementById('progressStepTitle');
+      const detailText = document.getElementById('progressDetailText');
+
+      tracker.classList.remove('hidden');
+      bar.style.width = `${pct}%`;
+      pctText.innerText = `${pct}%`;
+      if (title) titleText.innerText = title;
+      if (detail) detailText.innerText = detail;
+    }
+
+    function hideProgress() {
+      document.getElementById('progressTracker').classList.add('hidden');
+    }
+
+    async function runBatchAnalysis() {
+      if (selectedFiles.length === 0) return;
+
+      const resultsList = document.getElementById('batchResultsList');
+      document.getElementById('resultsPanel').classList.remove('hidden');
+      document.getElementById('resultCountBadge').innerText = `${selectedFiles.length} Verified Evidence Dossier(s)`;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        const modality = detectClientModality(file.name, file.type);
+        highlightEngineForFile(file);
+
+        updateProgress(
+          Math.round((i / selectedFiles.length) * 100) + 15,
+          `Processing Evidence Item ${i+1}/${selectedFiles.length}: ${file.name}`,
+          `Routing to ${modality.name}...`
+        );
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          updateProgress(
+            Math.round((i / selectedFiles.length) * 100) + 40,
+            `Neural Inference: ${file.name}`,
+            `Extracting facial keyframes, acoustic harmonic spectrum & verifying authenticity...`
+          );
+
+          const res = await fetch(`${API_BASE}/api/v1/detect`, { method: 'POST', body: formData });
+          if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
+          
+          const data = await res.json();
+          processedResults[file.name] = data;
+
+          updateProgress(
+            Math.round(((i + 1) / selectedFiles.length) * 100),
+            `Evidence Synthesized: ${file.name}`,
+            `Sealed with cryptographically signed HMAC-SHA256 signature.`
+          );
+
+          renderResultCard(file, data, i);
+
+        } catch (err) {
+          console.error("Forensic analysis error for file:", file.name, err);
+          renderErrorCard(file, err.message, i);
+        }
+      }
+
+      setTimeout(() => {
+        hideProgress();
+        fetchAuditLogs();
+      }, 600);
+    }
+
+    function formatVerdict(verdict) {
+      if (verdict === 'SYNTHETIC_MEDIA' || verdict === 'FAKE') return 'SYNTHETIC / DEEPFAKE';
+      if (verdict === 'REAL_MEDIA' || verdict === 'REAL') return 'AUTHENTIC NATURAL MEDIA';
+      return verdict || 'UNKNOWN';
+    }
+
+    function copyToClipboard(text, btnElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        const origHtml = btnElement.innerHTML;
+        btnElement.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Copied!`;
+        setTimeout(() => {
+          btnElement.innerHTML = origHtml;
+        }, 1800);
+      });
+    }
+
+    function renderResultCard(file, data, index) {
+      const resultsList = document.getElementById('batchResultsList');
+      const isFake = data.verdict === 'SYNTHETIC_MEDIA' || data.is_fake;
+      
+      const card = document.createElement('div');
+      const cardBg = isDarkMode ? 'glass-panel border-cyber-700/80 shadow-2xl' : 'glass-panel-light border-slate-200 shadow-xl';
+      const innerBg = isDarkMode ? 'bg-cyber-950/80 border-cyber-700/80' : 'bg-slate-50 border-slate-200';
+      const titleText = isDarkMode ? 'text-white' : 'text-slate-900';
+
+      // Multimodal fusion metrics
+      const fusion = data.fusion_analysis || {};
+      const flaggedFrames = data.flagged_frames || [];
+      const hasAudio = data.audio_analysis && data.audio_analysis.has_audio;
+      const vScore = (data.vision_analysis && typeof data.vision_analysis.score === 'number') ? data.vision_analysis.score : (fusion.video_fake_score || 0.0);
+      const aScore = (data.audio_analysis && typeof data.audio_analysis.score === 'number') ? data.audio_analysis.score : 0.0;
+      const trustScore = data.trust_score !== undefined ? data.trust_score : (isFake ? 12 : 98);
+
+      // Status badges
+      const statusBorder = isFake ? 'border-rose-500/40' : 'border-emerald-500/40';
+      const statusBg = isFake ? 'bg-rose-500/10' : 'bg-emerald-500/10';
+      const statusText = isFake ? 'text-rose-400' : 'text-emerald-400';
+      const verdictGlow = isFake ? 'glow-rose' : 'glow-emerald';
+
+      // Build Flagged Frames Gallery HTML if available
+      let flaggedFramesHtml = '';
+      if (flaggedFrames.length > 0) {
+        flaggedFramesHtml = `
+          <div class="${innerBg} border rounded-2xl p-4 md:p-5 space-y-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i> Flagged Anomaly Frames (${flaggedFrames.length} Detected)
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">Neural artifacts detected in facial keyframes</span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-64 overflow-y-auto pr-1">
+              ${flaggedFrames.map(f => `
+                <div class="bg-cyber-900 border border-rose-500/30 rounded-xl p-2 text-center space-y-1.5 hover:border-rose-400 transition cursor-pointer group" onclick="openImageModal('${f.thumbnail}', 'Frame #${f.frame_number} (${f.timestamp}) - ${f.anomaly_pct}% Anomaly Score')">
+                  <div class="h-20 w-full overflow-hidden rounded-lg bg-cyber-950 relative">
+                    <img src="${f.thumbnail}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" alt="Flagged frame">
+                    <span class="absolute bottom-1 right-1 bg-rose-950/90 text-rose-300 font-mono text-[9px] px-1.5 py-0.5 rounded border border-rose-700">
+                      ${f.anomaly_pct}% Anomaly
+                    </span>
+                  </div>
+                  <div class="text-[11px] font-mono text-slate-300 truncate">Frame #${f.frame_number} &bull; ${f.timestamp}</div>
+                  <div class="text-[10px] text-slate-500 font-mono">${f.has_face ? 'Face Filter: Matched' : 'Keyframe'}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Build Multimodal Breakdown Section
+      let breakdownHtml = '';
+      if (data.modality === 'fusion_engine') {
+        breakdownHtml = `
+          <div class="${innerBg} border rounded-2xl p-4 md:p-5 space-y-3.5">
+            <div class="flex items-center justify-between border-b ${isDarkMode ? 'border-cyber-800' : 'border-slate-200'} pb-2.5">
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project"></i> Multimodal Dual-Branch Telemetry
+              </span>
+              <span class="text-[10px] font-mono bg-sky-500/10 text-sky-300 border border-sky-500/20 px-2.5 py-0.5 rounded-full">Video + Audio Fusion</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs pt-1">
+              <div class="bg-cyber-900/90 border border-cyber-700/80 p-3.5 rounded-xl space-y-1.5">
+                <div class="text-slate-400 text-[11px] font-mono">Video Facial Score</div>
+                <div class="text-xl font-display font-bold ${vScore > 0.5 ? 'text-rose-400' : 'text-emerald-400'}">${Math.round(vScore * 100)}% Anomaly</div>
+                <div class="text-[10px] text-slate-500 font-mono">${fusion.frames_analyzed || 0} frames analyzed (${fusion.frames_with_faces || 0} faces)</div>
+              </div>
+              <div class="bg-cyber-900/90 border border-cyber-700/80 p-3.5 rounded-xl space-y-1.5">
+                <div class="text-slate-400 text-[11px] font-mono">Audio Voice Spectrum</div>
+                <div class="text-xl font-display font-bold ${fusion.audio_available ? (aScore > 0.5 ? 'text-rose-400' : 'text-emerald-400') : 'text-slate-400'}">
+                  ${fusion.audio_available ? `${Math.round(aScore * 100)}% Clone` : 'No Audio Track'}
+                </div>
+                <div class="text-[10px] text-slate-500 font-mono">${fusion.audio_available ? 'Wav2Vec2 voice spectrum' : 'Silent stream'}</div>
+              </div>
+              <div class="bg-cyber-900/90 border border-cyber-700/80 p-3.5 rounded-xl space-y-1.5">
+                <div class="text-slate-400 text-[11px] font-mono">Combined Fusion Verdict</div>
+                <div class="text-xl font-display font-bold ${isFake ? 'text-rose-400' : 'text-emerald-400'}">${Math.round((fusion.fusion_score || vScore) * 100)}% Confidence</div>
+                <div class="text-[10px] text-slate-500 font-mono">Cross-branch weighted neural fusion</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (data.modality === 'audio_model') {
+        breakdownHtml = `
+          <div class="${innerBg} border rounded-2xl p-4 md:p-5 space-y-3.5">
+            <span class="text-xs font-bold text-violet-400 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-waveform"></i> Acoustic Forensic Telemetry
+            </span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+              <div class="bg-cyber-900/90 border border-cyber-700/80 p-3.5 rounded-xl space-y-1.5">
+                <div class="text-slate-400 text-[11px] font-mono">Synthetic Speech Probability</div>
+                <div class="text-2xl font-display font-bold ${aScore > 0.5 ? 'text-rose-400' : 'text-emerald-400'}">${Math.round(aScore * 100)}%</div>
+                <div class="text-[10px] text-slate-500 font-mono">Neural vocoder frequency &amp; harmonic spectral alignment</div>
+              </div>
+              <div class="bg-cyber-900/90 border border-cyber-700/80 p-3.5 rounded-xl space-y-1.5">
+                <div class="text-slate-400 text-[11px] font-mono">Authentic Human Voice Probability</div>
+                <div class="text-2xl font-display font-bold ${aScore <= 0.5 ? 'text-emerald-400' : 'text-slate-400'}">${Math.round((1.0 - aScore) * 100)}%</div>
+                <div class="text-[10px] text-slate-500 font-mono">Natural human vocal tract pitch jitter</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      card.className = `${cardBg} border rounded-3xl p-6 md:p-8 space-y-6 relative overflow-hidden transition-all duration-300`;
+
+      card.innerHTML = `
+        <!-- Card Top Bar -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b ${isDarkMode ? 'border-cyber-700/60' : 'border-slate-200'} pb-5 gap-4">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2.5">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-400 bg-sky-500/10 border border-sky-500/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                <i class="fa-solid fa-microchip"></i> ${data.routed_name || 'Forensic AI Pipeline'}
+              </span>
+              <span class="text-[11px] text-slate-400 font-mono">Item #${index + 1}</span>
+            </div>
+            <h3 class="text-xl font-mono font-bold ${titleText} truncate max-w-xl" title="${data.filename || file.name}">${data.filename || file.name}</h3>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- Large Verdict Pill -->
+            <div class="px-5 py-2.5 rounded-2xl text-xs font-display font-bold border flex items-center gap-2.5 ${statusBg} ${statusBorder} ${statusText} ${verdictGlow}">
+              <i class="fa-solid ${isFake ? 'fa-triangle-exclamation animate-pulse' : 'fa-circle-check'} text-base"></i>
+              <span class="tracking-wide">${formatVerdict(data.verdict)}</span>
+            </div>
+
+            <!-- Trust Score Circular / Metric Box -->
+            <div class="bg-cyber-900 border border-cyber-700/80 px-4 py-2 rounded-2xl text-right shadow-inner min-w-[90px]">
+              <div class="text-[10px] uppercase text-slate-400 font-mono font-bold">Trust Index</div>
+              <div class="text-2xl font-display font-extrabold ${statusText}">
+                ${trustScore}<span class="text-xs text-slate-500 font-normal">/100</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multimodal Breakdown (Fusion / Audio) -->
+        ${breakdownHtml}
+
+        <!-- Flagged Frames Gallery (Video Anomaly Evidence) -->
+        ${flaggedFramesHtml}
+
+        <!-- Explainable AI (XAI) & Cryptographic Details -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
+          <!-- Explainable AI Box -->
+          <div class="${innerBg} border rounded-2xl p-5 space-y-3.5 flex flex-col justify-between">
+            <div class="space-y-2.5">
+              <div class="flex justify-between items-center border-b ${isDarkMode ? 'border-cyber-800' : 'border-slate-200'} pb-2">
+                <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-brain text-sky-400"></i> Forensic Intelligence Findings
+                </span>
+                <span class="text-[10px] text-sky-400 font-mono font-bold">English / தமிழ்</span>
+              </div>
+              <p class="text-xs ${isDarkMode ? 'text-slate-300' : 'text-slate-700'} leading-relaxed pt-1">
+                ${data.xai_explanation || 'Forensic analysis completed.'}
+              </p>
+              
+              <!-- Tamil Explanation Card -->
+              <div class="p-3 rounded-xl bg-sky-500/[0.07] border border-sky-500/20 text-xs text-sky-300 space-y-1">
+                <div class="text-[10px] font-bold text-sky-400 flex items-center gap-1.5 font-mono">
+                  <i class="fa-solid fa-language"></i> தமிழ் புலனாய்வு அறிக்கை:
+                </div>
+                <p class="text-[11px] leading-relaxed text-slate-300">${data.tamil_explanation || 'பகுப்பாய்வு வெற்றிகரமாக நிறைவடைந்தது.'}</p>
+              </div>
+            </div>
+
+            <div class="pt-2 text-[10px] font-mono text-slate-500 truncate flex justify-between border-t ${isDarkMode ? 'border-cyber-800' : 'border-slate-200'}">
+              <span>Timestamp: ${data.timestamp || new Date().toISOString()}</span>
+              <span>Model Confidence: ${data.confidence || 95}%</span>
+            </div>
+          </div>
+
+          <!-- Cryptographic Custody Box -->
+          <div class="${innerBg} border rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex justify-between items-center border-b ${isDarkMode ? 'border-cyber-800' : 'border-slate-200'} pb-2">
+                <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-shield-halved text-sky-400"></i> Cryptographic Custody
+                </span>
+                <span class="text-[10px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-2.5 py-0.5 rounded-full font-mono font-bold">
+                  HMAC Sealed
+                </span>
+              </div>
+              
+              <div class="space-y-2 text-xs">
+                <div>
+                  <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mb-1">
+                    <span>SHA-256 Digest:</span>
+                    <button onclick="copyToClipboard('${data.hash || ''}', this)" class="text-sky-400 hover:text-sky-300 transition flex items-center gap-1">
+                      <i class="fa-solid fa-copy"></i> Copy
+                    </button>
+                  </div>
+                  <div class="font-mono text-[11px] text-sky-400 bg-cyber-900 p-2 rounded-xl border border-cyber-700/80 break-all select-all">
+                    ${data.hash || ''}
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mb-1">
+                    <span>HMAC-SHA256 Digital Forensic Signature:</span>
+                    <button onclick="copyToClipboard('${data.hmac_signature || ''}', this)" class="text-sky-400 hover:text-sky-300 transition flex items-center gap-1">
+                      <i class="fa-solid fa-copy"></i> Copy
+                    </button>
+                  </div>
+                  <div class="font-mono text-[11px] text-slate-300 bg-cyber-900 p-2 rounded-xl border border-cyber-700/80 break-all select-all">
+                    ${data.hmac_signature || ''}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 text-[10px] text-slate-500 font-mono flex items-center justify-between border-t ${isDarkMode ? 'border-cyber-800' : 'border-slate-200'}">
+              <span>Payload Size: ${(data.payload_bytes ? (data.payload_bytes / 1024).toFixed(1) : '0')} KB</span>
+              <span class="text-emerald-400 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-check-double"></i> Legally Admissible Audit
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thermal Jet Compression Heatmap (Visual Anomaly Inspection) -->
+        ${data.heatmap_url ? `
+          <div class="${innerBg} border rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-fire-flame-curved text-amber-400"></i> Thermal Compression Artifact Heatmap (Jet Colormap)
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">Red &amp; yellow highlights denote spatial pixel error residuals</span>
+            </div>
+            <div class="flex justify-center border ${isDarkMode ? 'border-cyber-700/80' : 'border-slate-300'} rounded-2xl overflow-hidden bg-cyber-950 p-3 cursor-pointer hover:border-sky-500/50 transition-all group" onclick="openImageModal('${data.heatmap_url}', 'Thermal Jet Heatmap - ${data.filename}')">
+              <img src="${data.heatmap_url}" class="max-h-64 object-contain rounded-xl border border-cyber-700 shadow-inner group-hover:scale-[1.01] transition-transform" alt="Thermal Jet Heatmap">
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Bottom Action Bar -->
+        <div class="pt-3 flex flex-wrap items-center justify-between gap-4 border-t ${isDarkMode ? 'border-cyber-700/60' : 'border-slate-200'}">
+          <div class="text-[11px] font-mono text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-sky-400"></i>
+            <span>Engine: <strong>${data.routed_name || 'Forensic Pipeline'}</strong></span>
+          </div>
+          <button onclick="exportCertificatePDF('${file.name}')" class="bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-400 hover:to-cyan-300 text-slate-950 text-xs px-5 py-2.5 rounded-xl font-display font-bold flex items-center gap-2 transition-all shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 uppercase tracking-wider">
+            <i class="fa-solid fa-file-pdf"></i> Export Forensic Certificate PDF
+          </button>
+        </div>
+      `;
+
+      resultsList.appendChild(card);
+    }
+
+    function renderErrorCard(file, errorMsg, index) {
+      const resultsList = document.getElementById('batchResultsList');
+      const card = document.createElement('div');
+      card.className = "bg-rose-950/20 border-2 border-rose-500/40 rounded-3xl p-6 space-y-3 shadow-xl";
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-rose-400 font-bold text-sm flex items-center gap-2 font-display">
+            <i class="fa-solid fa-circle-xmark"></i> Pipeline Execution Error: ${file.name}
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Item #${index + 1}</span>
+        </div>
+        <p class="text-xs text-rose-300 font-mono bg-rose-950/40 p-3 rounded-xl border border-rose-500/20">${errorMsg}</p>
+      `;
+      resultsList.appendChild(card);
+    }
+
+    function openImageModal(imgSrc, caption) {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImg');
+      const cap = document.getElementById('modalCaption');
+      img.src = imgSrc;
+      cap.innerText = caption || '';
+      modal.classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.add('hidden');
+    }
+
+    // Keyboard support: ESC closes modal or drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+        if (drawerOpen) toggleSidebar();
+      }
+    });
+
+    async function fetchAuditLogs() {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/audit-logs`);
+        if(!res.ok) return;
+        const data = await res.json();
+        cachedLogs = data.logs || [];
+        renderLogs(cachedLogs);
+      } catch (err) {
+        console.warn("Could not fetch audit logs from backend.");
+      }
+    }
+
+    function renderLogs(logs) {
+      const container = document.getElementById('auditListContainer');
+      container.innerHTML = '';
+      if (!logs || logs.length === 0) {
+        container.innerHTML = `<div class="text-center text-slate-500 py-8 font-mono text-xs">No matching audit logs registered in vault.</div>`;
+        return;
+      }
+      logs.forEach(log => {
+        const isFake = log.verdict === 'SYNTHETIC_MEDIA' || log.verdict === 'FAKE';
+        const card = document.createElement('div');
+        card.className = "bg-cyber-950 border border-cyber-700/80 p-3 rounded-xl space-y-1.5 hover:border-sky-500/40 transition cursor-pointer";
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-[11px] font-display ${isFake ? 'text-rose-400' : 'text-emerald-400'}">${formatVerdict(log.verdict)}</span>
+            <span class="text-slate-500 text-[10px] font-mono">${log.timestamp || ''}</span>
+          </div>
+          <div class="text-[11px] font-mono text-slate-300 truncate">${log.filename || 'Unknown'}</div>
+          <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono">
+            <span class="text-sky-400 truncate max-w-[130px]">${log.routed_name ? log.routed_name.split('(')[0] : 'Forensic AI'}</span>
+            <span>Trust: <strong class="text-slate-200">${log.trust_score || 0}/100</strong></span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterLogs() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = cachedLogs.filter(l => 
+        (l.hash && l.hash.toLowerCase().includes(query)) || 
+        (l.filename && l.filename.toLowerCase().includes(query)) ||
+        (l.verdict && l.verdict.toLowerCase().includes(query)) ||
+        formatVerdict(l.verdict).toLowerCase().includes(query)
+      );
+      renderLogs(filtered);
+    }
+
+    function exportCertificatePDF(fileName) {
+      const data = processedResults[fileName];
+      if (!data) return alert('Data not found for certificate generation.');
+
+      const payloadBytes = data.payload_bytes || 0;
+      const hmacSig = data.hmac_signature || '';
+      const sha256Hash = data.hash || '';
+
+      const printWindow = window.open('', '_blank');
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Forensic_Certificate_${data.filename}</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+            body { 
+              font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+              padding: 48px; 
+              color: #0f172a; 
+              background: #fff; 
+              line-height: 1.6; 
+            }
+            .header { 
+              border-bottom: 3px solid #0f172a; 
+              padding-bottom: 18px; 
+              margin-bottom: 28px; 
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-end;
+            }
+            .title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: #0284c7; }
+            .sub { font-size: 11px; color: #64748b; margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+            .seal-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; background: #0f172a; color: #fff; padding: 4px 10px; border-radius: 6px; }
+            .section { margin-bottom: 24px; }
+            .section-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: #334155; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px; letter-spacing: 0.5px; }
+            .row { font-size: 12px; margin-bottom: 8px; display: flex; }
+            .label { font-weight: 700; width: 220px; color: #64748b; flex-shrink: 0; }
+            .val { font-weight: 600; color: #0f172a; }
+            .code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: #f8fafc; padding: 8px 12px; border-radius: 6px; word-break: break-all; margin-top: 4px; border: 1px solid #e2e8f0; color: #0f172a; }
+            .verdict-box { 
+              margin-top: 32px; 
+              border: 2px solid ${data.is_fake ? '#e11d48' : '#059669'}; 
+              background: ${data.is_fake ? '#fff1f2' : '#f0fdf4'};
+              padding: 24px; 
+              border-radius: 12px; 
+              text-align: center; 
+            }
+            .verdict-title { 
+              font-size: 18px; 
+              font-weight: 900; 
+              letter-spacing: 0.5px; 
+              color: ${data.is_fake ? '#be123c' : '#047857'}; 
+            }
+            .seal-stamp { margin-top: 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #64748b; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <div class="title">IDHU UNMAIYA &bull; FORENSIC EVIDENCE CERTIFICATE</div>
+              <div class="sub">Cryptographic Chain of Custody &amp; Multimodal Deepfake Verification Report</div>
+            </div>
+            <div class="seal-badge">HMAC-SHA256 CERTIFIED</div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">1. Evidence Ingestion &amp; Model Routing Metadata</div>
+            <div class="row"><span class="label">Evidence File Name:</span> <span class="val">${data.filename}</span></div>
+            <div class="row"><span class="label">MIME Content Type:</span> <span class="val">${data.content_type || 'media/unknown'}</span></div>
+            <div class="row"><span class="label">Payload Size:</span> <span class="val">${payloadBytes} bytes (${(payloadBytes/1024).toFixed(2)} KB)</span></div>
+            <div class="row"><span class="label">Routed Forensic Model:</span> <span class="val">${data.routed_name || 'Multimodal AI'}</span></div>
+            <div class="row"><span class="label">Ingestion Timestamp:</span> <span class="val">${data.timestamp || new Date().toUTCString()}</span></div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">2. Verification Findings &amp; Forensic Analytics</div>
+            <div class="row"><span class="label">Authenticity Verdict:</span> <span class="val" style="color: ${data.is_fake ? '#e11d48' : '#059669'}; font-size: 13px; font-weight: 800;">${formatVerdict(data.verdict)}</span></div>
+            <div class="row"><span class="label">Authenticity Trust Score:</span> <span class="val">${data.trust_score || 0} / 100</span></div>
+            <div class="row"><span class="label">Model Confidence:</span> <span class="val">${data.confidence || 95}%</span></div>
+            ${data.fusion_analysis && data.fusion_analysis.fusion_score !== undefined ? `
+              <div class="row"><span class="label">Video Facial Anomaly:</span> <span class="val">${Math.round((data.fusion_analysis.video_fake_score || 0)*100)}%</span></div>
+              <div class="row"><span class="label">Audio Spectral Clone Score:</span> <span class="val">${data.fusion_analysis.audio_available ? Math.round((data.fusion_analysis.audio_fake_score || 0)*100) + '%' : 'N/A (No audio stream)'}</span></div>
+              <div class="row"><span class="label">Flagged Anomaly Frames:</span> <span class="val">${(data.flagged_frames || []).length} frame(s)</span></div>
+            ` : ''}
+            <div class="row" style="margin-top: 10px;"><span class="label">Explainable AI (XAI) Finding:</span></div>
+            <div style="font-size: 12px; color: #1e293b; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 4px;">
+              ${data.xai_explanation || ''}
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">3. Cryptographic Chain of Custody &amp; Legal Admissibility</div>
+            <div class="row"><span class="label">SHA-256 Digest:</span></div>
+            <div class="code">${sha256Hash}</div>
+            <div class="row" style="margin-top: 12px;"><span class="label">HMAC-SHA256 Digital Forensic Signature:</span></div>
+            <div class="code">${hmacSig}</div>
+          </div>
+
+          <div class="verdict-box">
+            <div class="verdict-title">${data.is_fake ? 'CLASSIFIED AS SYNTHETIC / DEEPFAKE MEDIA' : 'CLASSIFIED AS AUTHENTIC NATURAL MEDIA'}</div>
+            <div class="seal-stamp">SEALED &amp; VERIFIED BY IDHU UNMAIYA FORENSIC AI COMMAND CENTER</div>
+          </div>
+
+          <script>
+            window.onload = function() { window.print(); };
+          <\/script>
+        </body>
+        </html>
+      `;
+      printWindow.document.write(htmlContent);
+      printWindow.document.close();
+    }
+
+    // Initialize audit logs on load
+    fetchAuditLogs();
+  </script>
+</body>
+</html>
